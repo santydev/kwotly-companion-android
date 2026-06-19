@@ -1,6 +1,7 @@
 package ai.kwotly.companion.di
 
 import ai.kwotly.companion.BuildConfig
+import ai.kwotly.companion.data.remote.AuthInterceptor
 import ai.kwotly.companion.data.remote.KwotlyApi
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -29,7 +30,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+    fun provideOkHttpClient(authInterceptor: AuthInterceptor): OkHttpClient = OkHttpClient.Builder()
+        // Bearer token first, so logging (below) captures the final headers.
+        .addInterceptor(authInterceptor)
         .apply {
             // Body-level logging prints the JWT — gated on the debug-only
             // BuildConfig flag so it can never reach a release build.
@@ -39,8 +42,6 @@ object NetworkModule {
                 )
             }
         }
-        // TODO(quotes, J2-J3): add an AuthInterceptor that attaches the
-        //  bearer token from AuthDataStore once authenticated endpoints land.
         .build()
 
     @Provides
