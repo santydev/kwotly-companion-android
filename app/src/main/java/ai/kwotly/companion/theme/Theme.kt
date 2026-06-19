@@ -1,6 +1,5 @@
 package ai.kwotly.companion.theme
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -47,7 +46,10 @@ private val LightColorScheme = lightColorScheme(
  */
 @Composable
 fun KwotlyCompanionTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    // Dark by default — the brand identity ships dark. System-following +
+    // a light/Material You toggle is an S2 polish item; the param stays
+    // overridable for that and for previews/tests.
+    darkTheme: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     MaterialTheme(

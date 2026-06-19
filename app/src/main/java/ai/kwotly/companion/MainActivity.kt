@@ -1,5 +1,6 @@
 package ai.kwotly.companion
 
+import ai.kwotly.companion.presentation.navigation.KwotlyNavHost
 import ai.kwotly.companion.theme.KwotlyCompanionTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,12 +8,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,29 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             KwotlyCompanionTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Kwotly",
-                        modifier = Modifier.padding(innerPadding),
-                    )
+                    KwotlyNavHost(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        color = MaterialTheme.colorScheme.tertiary, // legendary gold — placeholder smoke test
-        modifier = modifier,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    KwotlyCompanionTheme {
-        Greeting("Kwotly")
     }
 }
